@@ -12,3 +12,22 @@ Consigli del giorno:
 > - Dividete in piccoli problemi la consegna.
 > - Individuate gli elementi di cui avete bisogno per realizzare il programma.
 > - Immaginate la logica come fosse uno snack: "Dati 2 array di numeri, indica quali e quanti numeri ci sono in comune tra i due array"*/
+
+let arrayNumeriCasuali = [];
+const numeriInseritiHtml = document.getElementsByClassName('insertNumber');
+
+let counter = 30;
+const timeout = setTimeout(countdown, 1000);
+const timer = document.getElementById("timer");
+
+for (let i = 0; i < 5; i++){
+    arrayNumeriCasuali.push(Math.floor((Math.random() * 99) + 1));
+    numeriInseritiHtml[i].innerHTML = arrayNumeriCasuali[i];
+}
+
+
+function countdown() {
+    timer.innerHTML = "";
+}
+
+console.log(timeout )
