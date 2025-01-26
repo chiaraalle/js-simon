@@ -14,20 +14,52 @@ Consigli del giorno:
 > - Immaginate la logica come fosse uno snack: "Dati 2 array di numeri, indica quali e quanti numeri ci sono in comune tra i due array"*/
 
 let arrayNumeriCasuali = [];
-const numeriInseritiHtml = document.getElementsByClassName('insertNumber');
-
+let numeriInseritiHtml = document.getElementsByClassName('insertNumber');
+const istruzione = document.getElementById('istruzione');
 let counter = 30;
-const timeout = setTimeout(countdown, 1000);
+const timeout = setInterval(countdown, 1000);
 const timer = document.getElementById("timer");
+const button = document.getElementById('btnSubmit');
+let numeriCorretti = [];
+const risultato = document.getElementById('risultato')
 
-for (let i = 0; i < 5; i++){
-    arrayNumeriCasuali.push(Math.floor((Math.random() * 99) + 1));
-    numeriInseritiHtml[i].innerHTML = arrayNumeriCasuali[i];
+for (let i = 0; arrayNumeriCasuali.length < 5; i++){
+    let numCasuale= Math.floor((Math.random() * 99) + 1);
+    if(!arrayNumeriCasuali.includes(numCasuale)){
+        arrayNumeriCasuali.push(numCasuale);
+    }
+    
 }
-
+for (let j = 0; j< arrayNumeriCasuali.length; j++){
+         numeriInseritiHtml[j].innerHTML=arrayNumeriCasuali[j];    
+}
 
 function countdown() {
-    timer.innerHTML = "";
+    timer.innerHTML = counter;
+    if(counter === 0){
+        clearInterval(timeout);
+        for (let k = 0; k < numeriInseritiHtml.length ; k++){
+            numeriInseritiHtml[k].innerHTML='<input type="number" name="number" class="numeriScelti" min="1" max="99" required />'
+        } 
+        istruzione.innerText = "inserisci tutti i numeri che ricordi (l'ordine non è importante)"
+        button.style.visibility = 'visible';
+    } else {
+        counter--
+    }
 }
 
-console.log(timeout )
+button.addEventListener("click", function(event){
+    event.preventDefault()
+    numeriScelti= document.querySelectorAll('.numeriScelti');
+    button.style.visibility = 'hidden';
+    for (let a = 0; a < numeriInseritiHtml.length; a++){
+        for (let b = 0; b < arrayNumeriCasuali.length; b++){
+            if(parseInt(numeriScelti[a].value) === arrayNumeriCasuali[b]){
+                numeriCorretti.push(arrayNumeriCasuali[b])
+            } 
+        }
+    }
+    risultato.innerText = "Hai indovinato "+numeriCorretti.length+" numeri! ("+numeriCorretti.join()+")" 
+})
+
+
